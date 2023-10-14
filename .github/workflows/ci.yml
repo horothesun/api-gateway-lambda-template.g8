@@ -10,6 +10,7 @@ on:
 env:
   G8_PARAM_GITHUB_ORG: "octo-org"
   G8_PARAM_REPO_NAME: "api-gateway-lambda"
+  G8_PARAM_DEFAULT_BRANCH: "master"
   G8_PARAM_ENVIRONMENT: "prod"
 
 concurrency:
@@ -27,11 +28,10 @@ jobs:
 
     - name: Generate project
       run: |
-        ls -lah
-        ls -lah ..
         sbt new file://../api-gateway-lambda-template.g8 \
           --name="${G8_PARAM_REPO_NAME}" \
           --github_org="${G8_PARAM_GITHUB_ORG}" \
+          --default_branch="${G8_PARAM_DEFAULT_BRANCH}" \
           --environment="${G8_PARAM_ENVIRONMENT}"
 
     - name: Cache generated project

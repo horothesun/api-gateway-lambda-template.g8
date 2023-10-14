@@ -1,4 +1,4 @@
-package com.$__github_org_pkg$.$scala_package_name_after_com_org$
+package com.$github_org_package_name_after_com$.$scala_package_name_after_com_org$
 
 import cats.effect.implicits._
 import cats.effect.{IO, Resource}

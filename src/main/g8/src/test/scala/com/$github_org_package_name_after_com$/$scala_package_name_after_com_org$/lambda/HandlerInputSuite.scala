@@ -1,7 +1,7 @@
-package com.$__github_org_pkg$.$scala_package_name_after_com_org$.lambda
+package com.$github_org_package_name_after_com$.$scala_package_name_after_com_org$.lambda
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent
-import com.$__github_org_pkg$.$scala_package_name_after_com_org$.Models.Input
+import com.$github_org_package_name_after_com$.$scala_package_name_after_com_org$.Models.Input
 import munit.FunSuite
 import HandlerInput._
 import Models.BodyEncoding._

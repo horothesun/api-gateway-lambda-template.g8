@@ -2,7 +2,7 @@ import sbtassembly.MergeStrategy
 
 scalacOptions += "-Xfatal-warnings"
 
-ThisBuild / organization     := "com.$__github_org_pkg$"
+ThisBuild / organization     := "com.$github_org_package_name_after_com$"
 ThisBuild / organizationName := "$github_org$"
 ThisBuild / scalaVersion     := "2.13.12"
 

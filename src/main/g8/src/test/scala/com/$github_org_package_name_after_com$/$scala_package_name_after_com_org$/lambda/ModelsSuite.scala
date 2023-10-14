@@ -1,4 +1,4 @@
-package com.$__github_org_pkg$.$scala_package_name_after_com_org$.lambda
+package com.$github_org_package_name_after_com$.$scala_package_name_after_com_org$.lambda
 
 import munit.ScalaCheckSuite
 import org.scalacheck.Gen
