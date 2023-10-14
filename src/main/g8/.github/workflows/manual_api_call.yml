@@ -1,0 +1,20 @@
+name: Manual API call
+
+on:
+  workflow_dispatch: # enable manual execution
+
+env:
+  $environment;format="upper,snake"$_BASE_URL: \${{ secrets.$environment;format="upper,snake"$_BASE_URL }}
+
+jobs:
+  manual-api-call:
+    name: Manual API call
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+    - name: API call
+      run: |
+        curl --silent \
+          --write-out "\n%{http_code}\n" \
+          --request "GET" "\${$environment;format="upper,snake"$_BASE_URL}/time" | \
+          jq --slurp '{ http_code: .[1], response: .[0] }'

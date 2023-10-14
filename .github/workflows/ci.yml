@@ -1,0 +1,228 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch: # enable manual execution
+
+env:
+  G8_PARAM_GITHUB_ORG: "octo-org"
+  G8_PARAM_REPO_NAME: "api-gateway-lambda"
+  G8_PARAM_ENVIRONMENT: "prod"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  generate-project:
+    name: Generate project
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Generate project
+      run: |
+        ls -lah
+        ls -lah ..
+        sbt new file://../api-gateway-lambda-template.g8 \
+          --name="${G8_PARAM_REPO_NAME}" \
+          --github_org="${G8_PARAM_GITHUB_ORG}" \
+          --environment="${G8_PARAM_ENVIRONMENT}"
+
+    - name: Cache generated project
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.G8_PARAM_REPO_NAME }}
+        key: ${{ github.sha }}
+
+  shellcheck:
+    name: ShellCheck
+    needs: generate-project
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+    - name: Get cached generated project
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.G8_PARAM_REPO_NAME }}
+        key: ${{ github.sha }}
+
+    - name: ShellCheck
+      uses: ludeeus/action-shellcheck@1.1.0
+      env:
+        SHELLCHECK_OPTS: --severity style --enable all --exclude SC2312 --shell bash
+      with:
+        check_together: yes
+        scandir: ./${{ env.G8_PARAM_REPO_NAME }}/scripts
+
+  gh-workflows-check:
+    name: GitHub workflows check
+    needs: generate-project
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Get cached generated project
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.G8_PARAM_REPO_NAME }}
+        key: ${{ github.sha }}
+
+    - name: Setup act
+      uses: actionsflow/setup-act@v1
+
+    - name: GitHub workflows check
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        act --dryrun --platform "ubuntu-latest=catthehacker/ubuntu:act-latest"
+
+  scalafmt-check:
+    name: Scalafmt check
+    needs: generate-project
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+    - name: Get cached generated project
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.G8_PARAM_REPO_NAME }}
+        key: ${{ github.sha }}
+
+    - name: Get JDK version
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        source scripts/get_java_version.sh
+        echo "JAVA_VERSION=${JAVA_VERSION}" >> "${GITHUB_ENV}"
+
+    - name: Get sbt version
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        source scripts/get_sbt_version.sh
+        echo "SBT_VERSION=${SBT_VERSION}" >> "${GITHUB_ENV}"
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: "temurin"
+
+    - name: Scalafmt check
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        sbt scalafmtSbtCheck scalafmtCheck Test/scalafmtCheck
+
+  sbt-tests:
+    name: Run tests
+    needs: generate-project
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+    - name: Get cached generated project
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.G8_PARAM_REPO_NAME }}
+        key: ${{ github.sha }}
+
+    - name: Get JDK version
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        source scripts/get_java_version.sh
+        echo "JAVA_VERSION=${JAVA_VERSION}" >> "${GITHUB_ENV}"
+
+    - name: Get sbt version
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        source scripts/get_sbt_version.sh
+        echo "SBT_VERSION=${SBT_VERSION}" >> "${GITHUB_ENV}"
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: "temurin"
+
+    - name: Run tests
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        sbt test
+
+  build-image:
+    name: Build Docker image
+    needs: generate-project
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Get cached generated project
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.G8_PARAM_REPO_NAME }}
+        key: ${{ github.sha }}
+
+    - name: Get JDK version
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        source scripts/get_java_version.sh
+        echo "JAVA_VERSION=${JAVA_VERSION}" >> "${GITHUB_ENV}"
+
+    - name: Get sbt version
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        source scripts/get_sbt_version.sh
+        echo "SBT_VERSION=${SBT_VERSION}" >> "${GITHUB_ENV}"
+
+    - name: Build Docker image
+      env:
+        ECR_REGISTRY: "ecr_registry"
+        ECR_REPO_NAME: "ecr-repo-name"
+        IMAGE_LATEST_TAG: "latest"
+        SBT_VERSION: ${{ env.SBT_VERSION }}
+      run: |
+        cd "${G8_PARAM_REPO_NAME}"
+        ./scripts/build_docker_image.sh
+
+  upload-generated-project:
+    name: Upload generated project
+    if: github.ref == 'refs/heads/master'
+    needs: [ shellcheck, gh-workflows-check, scalafmt-check, sbt-tests, build-image ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+    - name: Get cached generated project
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.G8_PARAM_REPO_NAME }}
+        key: ${{ github.sha }}
+
+    - name: Upload generated project
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.G8_PARAM_REPO_NAME }}
+        path: |
+          ${{ env.G8_PARAM_REPO_NAME }}/
+          !${{ env.G8_PARAM_REPO_NAME }}/.bsp
+          !${{ env.G8_PARAM_REPO_NAME }}/target
+          !${{ env.G8_PARAM_REPO_NAME }}/project/project
+          !${{ env.G8_PARAM_REPO_NAME }}/project/target
+        if-no-files-found: error
+
+  clean-cached-project:
+    name: Clean cached project
+    if: ${{ always() }}
+    needs: upload-generated-project
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Clear cached project
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete "${GITHUB_SHA}" --confirm

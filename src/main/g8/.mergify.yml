@@ -1,0 +1,9 @@
+pull_request_rules:
+- name: Automatically merge Scala Steward PRs
+  conditions:
+  - author=$scala_steward_pr_author$
+  - "#approved-reviews-by>=1"
+  - status-success=Build, test and push
+  actions:
+    merge:
+      method: squash
