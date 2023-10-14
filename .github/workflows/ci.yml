@@ -7,10 +7,6 @@ on:
     branches: [ "master" ]
   workflow_dispatch: # enable manual execution
 
-permissions:
-  id-token: write
-  contents: read
-
 env:
   G8_PARAM_GITHUB_ORG: "octo-org"
   G8_PARAM_REPO_NAME: "api-gateway-lambda"
