@@ -10,6 +10,7 @@ on:
 env:
   G8_PARAM_NAME: "API Gateway triggered Lambda"
   G8_PARAM_GITHUB_ORG: "octo-org"
+  G8_PARAM_REPO_NAME: "api-gw-lambda"
   G8_PARAM_DEFAULT_BRANCH: "master"
   G8_PARAM_ENVIRONMENT: "prod"
 
@@ -31,6 +32,7 @@ jobs:
         sbt new file://../api-gateway-lambda-template.g8 \
           --name="${G8_PARAM_NAME}" \
           --github_org="${G8_PARAM_GITHUB_ORG}" \
+          --repo_name="${G8_PARAM_REPO_NAME}" \
           --default_branch="${G8_PARAM_DEFAULT_BRANCH}" \
           --environment="${G8_PARAM_ENVIRONMENT}"
 
