@@ -4,12 +4,12 @@ import sbt.Keys.libraryDependencies
 object Dependencies {
 
   object Version {
-    val catsEffect       = "3.5.2"
+    val catsEffect       = "3.5.0"
     val betterMonadicFor = "0.3.1"
-    val circe            = "0.14.6"
+    val circe            = "0.14.5"
     val awsLambdaCore    = "1.2.3"
     val awsLambdaEvents  = "3.11.3"
-    val logbackClassic   = "1.4.11"
+    val logbackClassic   = "1.4.9"
     val munitScalaCheck  = "0.7.29"
     val munitCatsEffect  = "1.0.7"
   }
