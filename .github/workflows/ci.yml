@@ -82,9 +82,9 @@ jobs:
         ACT_PLATFORM: "ubuntu-latest=catthehacker/ubuntu:act-latest"
       run: |
         cd "${G8_PARAM_REPO_NAME}"
-        act --dryrun --platform "${ACT_PLATFORM}" --workflow ".github/workflows/ci.yml"
-        act --dryrun --platform "${ACT_PLATFORM}" --workflow ".github/workflows/ecr_cleanup.yml"
-        act --dryrun --platform "${ACT_PLATFORM}" --workflow ".github/workflows/manual_api_call.yml"
+        act --dryrun --platform "${ACT_PLATFORM}" -W ".github/workflows/ci.yml"
+        act --dryrun --platform "${ACT_PLATFORM}" -W ".github/workflows/ecr_cleanup.yml"
+        act --dryrun --platform "${ACT_PLATFORM}" -W ".github/workflows/manual_api_call.yml"
 
   scalafmt-check:
     name: Scalafmt check
