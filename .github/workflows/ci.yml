@@ -8,8 +8,8 @@ on:
   workflow_dispatch: # enable manual execution
 
 env:
+  G8_PARAM_NAME: "API Gateway triggered Lambda"
   G8_PARAM_GITHUB_ORG: "octo-org"
-  G8_PARAM_REPO_NAME: "api-gateway-lambda"
   G8_PARAM_DEFAULT_BRANCH: "master"
   G8_PARAM_ENVIRONMENT: "prod"
 
@@ -29,7 +29,7 @@ jobs:
     - name: Generate project
       run: |
         sbt new file://../api-gateway-lambda-template.g8 \
-          --name="${G8_PARAM_REPO_NAME}" \
+          --name="${G8_PARAM_NAME}" \
           --github_org="${G8_PARAM_GITHUB_ORG}" \
           --default_branch="${G8_PARAM_DEFAULT_BRANCH}" \
           --environment="${G8_PARAM_ENVIRONMENT}"
