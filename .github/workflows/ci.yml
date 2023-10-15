@@ -78,9 +78,13 @@ jobs:
       uses: actionsflow/setup-act@v1
 
     - name: GitHub workflows check
+      env:
+        ACT_PLATFORM: "ubuntu-latest=catthehacker/ubuntu:act-latest"
       run: |
         cd "${G8_PARAM_REPO_NAME}"
-        act --dryrun --platform "ubuntu-latest=catthehacker/ubuntu:act-latest"
+        act --dryrun --platform "${ACT_PLATFORM}" --workflow ".github/workflows/ci.yml"
+        act --dryrun --platform "${ACT_PLATFORM}" --workflow ".github/workflows/ecr_cleanup.yml"
+        act --dryrun --platform "${ACT_PLATFORM}" --workflow ".github/workflows/manual_api_call.yml"
 
   scalafmt-check:
     name: Scalafmt check
