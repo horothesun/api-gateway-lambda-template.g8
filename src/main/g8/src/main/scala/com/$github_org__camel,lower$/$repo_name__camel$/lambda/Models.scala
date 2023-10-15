@@ -1,6 +1,6 @@
-package com.$github_org_package_name_after_com$.$scala_package_name_after_com_org$.lambda
+package com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda
 
-import com.$github_org_package_name_after_com$.$scala_package_name_after_com_org$.Models.Output._
+import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Output._
 import io.circe.generic.semiauto._
 import java.util.Base64._
 import scala.util.Try

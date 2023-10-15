@@ -31,4 +31,4 @@ FROM public.ecr.aws/lambda/java:\${JAVA_VERSION}
 
 COPY --from=builder /work/target/scala-2.13/$repo_name$.jar \${LAMBDA_TASK_ROOT}/lib/
 
-CMD ["com.$github_org_package_name_after_com$.$scala_package_name_after_com_org$.lambda.Handler::handleRequest"]
+CMD ["com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda.Handler::handleRequest"]
