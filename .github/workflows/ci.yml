@@ -8,7 +8,7 @@ on:
   workflow_dispatch: # enable manual execution
 
 env:
-  G8_PARAM_NAME: "API Gateway triggered Lambda"
+  G8_PARAM_NAME: "API GW Lambda"
   G8_PARAM_GITHUB_ORG: "octo-org"
   G8_PARAM_REPO_NAME: "api-gw-lambda"
   G8_PARAM_DEFAULT_BRANCH: "master"
