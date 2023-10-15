@@ -222,8 +222,7 @@ jobs:
 
     - name: Clear cached project
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        echo "TODO: uncomment!!!"
-        # gh extension install actions/gh-actions-cache
-        # gh actions-cache delete "${GITHUB_SHA}" --confirm
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete "${GITHUB_SHA}" --confirm
