@@ -203,7 +203,7 @@ jobs:
         key: ${{ github.sha }}
 
     - name: Upload generated project
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ env.G8_PARAM_REPO_NAME }}
         path: |
