@@ -1,6 +1,7 @@
 # API Gateway triggered Lambda
 
 [![CI](https://github.com/$github_org$/$repo_name$/actions/workflows/ci.yml/badge.svg)](https://github.com/$github_org$/$repo_name$/actions/workflows/ci.yml)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg?style=flat-square)](https://renovatebot.com)
 [![ECR cleanup](https://github.com/$github_org$/$repo_name$/workflows/ecr_cleanup.yml/badge.svg)](https://github.com/$github_org$/$repo_name$/actions/workflows/ecr_cleanup.yml)
 [![Manual API call](https://github.com/$github_org$/$repo_name$/actions/workflows/manual_api_call.yml/badge.svg)](https://github.com/$github_org$/$repo_name$/actions/workflows/manual_api_call.yml)
 
