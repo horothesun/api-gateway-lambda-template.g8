@@ -1,4 +1,4 @@
-# API Gateway triggered Lambda
+# $name$
 
 [![CI](https://github.com/$github_org$/$repo_name$/actions/workflows/ci.yml/badge.svg)](https://github.com/$github_org$/$repo_name$/actions/workflows/ci.yml)
 [![ECR cleanup](https://github.com/$github_org$/$repo_name$/workflows/ecr_cleanup.yml/badge.svg)](https://github.com/$github_org$/$repo_name$/actions/workflows/ecr_cleanup.yml)
