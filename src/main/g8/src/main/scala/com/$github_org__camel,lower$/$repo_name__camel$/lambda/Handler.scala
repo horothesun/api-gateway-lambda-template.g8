@@ -1,17 +1,17 @@
 package com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda
 
-import cats.effect.unsafe.implicits.global
+import Handler._
+import HandlerInput._
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import com.amazonaws.services.lambda.runtime._
 import com.amazonaws.services.lambda.runtime.events._
 import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$._
 import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Input
+import lambda.HandlerOutput._
 import lambda.Models._
 import lambda.Models.BodyEncoding._
-import lambda.HandlerOutput._
 import scala.jdk.CollectionConverters._
-import Handler._
-import HandlerInput._
 
 class Handler extends RequestHandler[APIGatewayV2HTTPEvent, APIGatewayV2HTTPResponse] {
 

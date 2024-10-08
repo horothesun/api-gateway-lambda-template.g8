@@ -1,10 +1,10 @@
 package com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda
 
+import HandlerInput._
+import Models.BodyEncoding._
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent
 import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Input
 import munit.FunSuite
-import HandlerInput._
-import Models.BodyEncoding._
 
 class HandlerInputSuite extends FunSuite {
 

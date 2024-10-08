@@ -1,11 +1,11 @@
 package com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda
 
+import Models._
+import Models.BodyEncoding._
 import com.amazonaws.services.lambda.runtime.events._
 import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Output
 import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Output._
 import io.circe.syntax._
-import Models._
-import Models.BodyEncoding._
 
 object HandlerOutput {
 

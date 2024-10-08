@@ -25,4 +25,5 @@ Giter8 template to generate an API Gateway triggered Lambda.
 ```bash
 sbt new horothesun/api-gateway-lambda-template.g8
 cd <repo_name>
+sbt scalafmtSbt scalafmt Test/scalafmt
 ```

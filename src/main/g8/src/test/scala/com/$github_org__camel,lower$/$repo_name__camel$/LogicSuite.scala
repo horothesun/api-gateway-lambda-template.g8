@@ -1,15 +1,15 @@
 package com.$github_org;format="camel,lower"$.$repo_name;format="camel"$
 
+import LogicSuite._
+import Models.Input
+import Models.Output.DateTimeBody
 import cats.effect.IO
 import java.time.{LocalDateTime, Month}
 import munit._
 import org.scalacheck.Gen
 import org.scalacheck.Prop._
-import LogicSpec._
-import Models.Input
-import Models.Output.DateTimeBody
 
-class LogicSpec extends CatsEffectSuite with ScalaCheckSuite {
+class LogicSuite extends CatsEffectSuite with ScalaCheckSuite {
 
   property("getOutput returns correct local date-time for all inputs") {
     forAll(inputGen) { in =>
@@ -23,7 +23,7 @@ class LogicSpec extends CatsEffectSuite with ScalaCheckSuite {
 
 }
 
-object LogicSpec {
+object LogicSuite {
 
   val inputGen: Gen[Input] = Gen.asciiStr.map(Input)
 

@@ -1,9 +1,9 @@
 package com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda
 
-import com.amazonaws.services.lambda.runtime.events._
-import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Input
 import Models._
 import Models.BodyEncoding._
+import com.amazonaws.services.lambda.runtime.events._
+import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Input
 
 object HandlerInput {
 

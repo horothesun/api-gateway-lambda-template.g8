@@ -1,11 +1,11 @@
 package com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda
 
+import HandlerOutput._
+import Models._
+import Models.BodyEncoding._
 import com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.Models.Output._
 import java.time.{LocalDateTime, Month}
 import munit.FunSuite
-import Models._
-import Models.BodyEncoding._
-import HandlerOutput._
 
 class HandlerOutputSuite extends FunSuite {
 
