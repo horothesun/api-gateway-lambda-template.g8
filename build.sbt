@@ -3,7 +3,7 @@ ThisBuild / scalaVersion := "2.13.17"
 lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)
   .settings(
-    name := "API Gateway Lambda template",
+    name         := "API Gateway Lambda template",
     test in Test := {
       val _ = (g8Test in Test).toTask("").value
     },
