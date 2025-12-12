@@ -211,7 +211,7 @@ jobs:
         key: ${{ github.sha }}
 
     - name: Upload generated project
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ env.G8_PARAM_REPO_NAME }}
         path: |
