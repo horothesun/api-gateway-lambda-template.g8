@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.18"
+ThisBuild / scalaVersion := "3.8.1"
 
 lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)

@@ -4,7 +4,7 @@ scalacOptions += "-Xfatal-warnings"
 
 ThisBuild / organization     := "com.$github_org;format="camel,lower"$"
 ThisBuild / organizationName := "$github_org$"
-ThisBuild / scalaVersion     := "2.13.18"
+ThisBuild / scalaVersion     := "3.8.1"
 
 val projectName = "$repo_name$"
 
