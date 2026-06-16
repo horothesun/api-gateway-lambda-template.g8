@@ -123,7 +123,7 @@ jobs:
     - name: Scalafmt check
       run: |
         cd "${G8_PARAM_REPO_NAME}"
-        sbt scalafmtSbtCheck scalafmtCheck Test/scalafmtCheck
+        sbt ";scalafmtSbtCheck" ";scalafmtCheck" ";Test/scalafmtCheck"
 
   sbt-tests:
     name: Run tests
@@ -161,7 +161,7 @@ jobs:
     - name: Run tests
       run: |
         cd "${G8_PARAM_REPO_NAME}"
-        sbt test
+        sbt testFull
 
   build-image:
     name: Build Docker image

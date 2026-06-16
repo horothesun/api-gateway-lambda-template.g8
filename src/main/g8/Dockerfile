@@ -3,9 +3,9 @@ ARG JAVA_VERSION=25
 
 # BUILDER
 
-FROM eclipse-temurin:\${JAVA_VERSION}-jdk-jammy as builder
+FROM eclipse-temurin:\${JAVA_VERSION}-jdk-jammy AS builder
 
-ARG SBT_VERSION=1.10.2
+ARG SBT_VERSION=2.0.0
 
 # install dependencies
 RUN apt-get update && apt-get install -y curl bash tar ca-certificates make git procps \
@@ -22,13 +22,13 @@ WORKDIR /work
 
 # compile
 COPY . /work
-RUN sbt clean assembly
+RUN sbt ";clean;assembly"
 
 
 # RUNNER
 
 FROM public.ecr.aws/lambda/java:\${JAVA_VERSION}
 
-COPY --from=builder /work/target/scala-2.13/$repo_name$.jar \${LAMBDA_TASK_ROOT}/lib/
+COPY --from=builder /work/target/out/jvm/scala-2.13.*/$repo_name$/$repo_name$.jar ${LAMBDA_TASK_ROOT}/lib/
 
 CMD ["com.$github_org;format="camel,lower"$.$repo_name;format="camel"$.lambda.Handler::handleRequest"]
