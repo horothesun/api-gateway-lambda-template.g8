@@ -1,21 +1,18 @@
-ThisBuild / scalaVersion := "2.13.18"
+ThisBuild / scalaVersion := "3.8.4"
 
 lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)
   .settings(
-    name         := "API Gateway Lambda template",
-    test in Test := {
-      val _ = (g8Test in Test).toTask("").value
-    },
+    name := "API Gateway Lambda template",
+
     scriptedLaunchOpts ++= List(
       "-Xms1024m",
       "-Xmx1024m",
       "-XX:ReservedCodeCacheSize=128m",
       "-Xss2m",
       "-Dfile.encoding=UTF-8"
-    ),
-    resolvers += Resolver.url("typesafe", url("https://repo.typesafe.com/typesafe/ivy-releases/"))(
-      Resolver.ivyStylePatterns
     )
   )
-  .settings(Dependencies.core)
+
+// The command alias seamlessly chains the tasks without macro cycles
+addCommandAlias("test", ";g8Test;Test/test")
