@@ -2,4 +2,4 @@ addSbtPlugin("org.foundweekends.giter8" %% "sbt-giter8" % "0.18.0")
 libraryDependencies += "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value
 
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.2")
-addSbtPlugin("com.eed3si9n"  % "sbt-assembly" % "2.3.1")
+addSbtPlugin("com.eed3si9n"  % "sbt-assembly" % "2.4.0")
